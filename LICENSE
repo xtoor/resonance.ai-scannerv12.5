@@ -191,7 +191,16 @@
 
 
 *NOTICE *
-This project was created to empower retail traders, not institutions.  
-Please respect the spirit of open source: share improvements, don’t hoard them.  
+Licensed under the Apache License, Version 2.0 (the "License").
+
+This project was created to empower **retail traders** by providing free, open-source tools  
+that reveal market movements often hidden by institutional systems.  
+
+While Apache 2.0 permits commercial use, redistribution, and modification,  
+the spirit of this project is clear:  
+⚡ This scanner exists for transparency and community benefit, not institutional exploitation.  
+
+If you improve or extend this work, please contribute back to the community  
+so retail traders may continue to grow stronger together.  
 
 
