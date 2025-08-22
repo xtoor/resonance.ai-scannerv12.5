@@ -91,9 +91,9 @@ To receive alerts in your Discord server:
 Create a Webhook
 In Discord, right-click your channel → Edit Channel
 Go to Integrations → Webhooks → New Webhook
-Give it a name (e.g. Resonance Alerts)
-Copy the Webhook URL
-Add the Webhook to the Scanner paste it directly into the code under DISCORD_WEBHOOK="https://discord.com/api/webhooks/..."
+→Give it a name (e.g. Resonance Alerts)
+→Copy the Webhook URL
+→Add the Webhook to the Scanner paste it directly into the code under DISCORD_WEBHOOK="https://discord.com/api/webhooks/..."
 
 Run the Scanner
 
