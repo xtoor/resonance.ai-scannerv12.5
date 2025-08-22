@@ -113,5 +113,5 @@ This project is licensed under the **Apache License 2.0** — free and open sour
 You are free to use, modify, and distribute this code (including commercially),  
 provided you keep the copyright notice and license text.  
 
-⚠️ No warranties or guarantees are provided.  r own risk. Not financial advice. Always paper trade after making changes to the scanner. 
+⚠️ No warranties or guarantees are provided.  Use at your own risk. Not financial advice. Always paper trade after making changes to the scanner. 
 
