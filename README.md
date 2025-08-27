@@ -1,28 +1,72 @@
 # Resonance.ai 🚨 Breakout Scanner 🚨
 
-Real-time crypto breakout detection powered by **Resonance.ai** (beta-version pre-ML).
-This scanner monitors Coinbase trading pairs and pushes instant alerts to Discord when breakout conditions are detected.
+Real-time crypto breakout detection powered by **Resonance.ai** (beta version pre-ML).
+This scanner monitors Coinbase trading pairs and sends instant breakout alerts to Discord.
 
 ---
 
 ## ✨ Features
 
-* **Multi-band breakout detection**
-
-  * Fast (10 candles)
-  * Medium (15 candles)
-  * Slow (20 candles)
-* **Two alert modes**
-
-  * Simple mode → quick clean alerts
-  * Pro mode → detailed analytics (volume ratios, over-max %, \$/min flow)
-* **Discord integration** → sends rich alerts directly to your server
-* **Volume protection** → filters out low-liquidity pairs with a dollar/minute floor
-* **Lightweight loop** → runs smoothly on cloud platforms like Railway
+- **Multi-band breakout detection**
+  - Fast (10 candles)
+  - Medium (15 candles)
+  - Slow (20 candles)
+- **Two alert modes**
+  - Simple mode → clean, quick alerts
+  - Pro mode → detailed analytics (volume ratios, over-max %, $/min flow)
+- **Discord integration** → rich alerts sent directly to your server
+- **Volume protection** → filters low-liquidity pairs with a dollar/minute floor
+- **Lightweight loop** → optimized for cloud platforms like Railway
 
 ---
 
-## 📊 Alert Example
+## 🚀 Quick Start
+
+1. Clone the repo:
+
+```bash
+git clone https://github.com/yourname/resonance-breakout-scanner.git
+cd resonance-breakout-scanner
+```
+
+1.1 You may need to run this too
+
+```bash
+python -m venv .venv
+source .venv/bin/activate
+```
+
+2. Install dependencies:
+
+```bash
+pip install -r requirements.txt
+```
+
+3. Set environment variables:
+
+| Variable        | Description                       | Default    |
+| --------------- | --------------------------------- | ---------- |
+| SIMPLE_MODE     | 1 = simple alerts, 0 = pro alerts | 1          |
+| ABS_VOL_MIN_USD | Minimum $/min volume filter       | 2000       |
+| DISCORD_WEBHOOK | Your Discord webhook URL          | (required) |
+
+Example `.env` file:
+
+```
+SIMPLE_MODE=1
+ABS_VOL_MIN_USD=2000
+DISCORD_WEBHOOK=https://discord.com/api/webhooks/yourwebhookid/yourwebhooktoken
+```
+
+4. Run the scanner:
+
+```bash
+python breakout_scanner.py
+```
+
+---
+
+## 📊 Alert Examples
 
 **Simple Mode**
 
@@ -49,23 +93,32 @@ Time: 12:34:56 UTC
 
 ---
 
-## ⚙️ Configuration
+## ⚙️ Configuration Parameters
 
-Set parameters via environment variables:
-
-* `SIMPLE_MODE=0` → enables Pro mode
-* `ABS_VOL_MIN_USD=2000` → minimum dollar/minute volume filter (default: 2000)
-* `DISCORD_WEBHOOK` → your Discord webhook URL
-
-Breakout thresholds (can be tuned in code settings):
-
-* FAST → 1.3% price over previous high + 1.3× volume spike
-* MEDIUM → 1.8% price over + 1.7× volume spike
-* SLOW → 2.4% price over + 2.2× volume spike
+| Parameter       | Description                                   | Default    |
+| --------------- | --------------------------------------------- | ---------- |
+| SIMPLE_MODE     | 1 = simple alerts, 0 = pro alerts             | 1          |
+| ABS_VOL_MIN_USD | Minimum dollar/minute volume to consider pair | 2000       |
+| DISCORD_WEBHOOK | Discord webhook URL for alerts                | (required) |
 
 ---
 
-## 🚀 Deployment
+## 🔧 Discord Setup
+
+To receive alerts in your Discord server:
+
+1. Create a Webhook
+2. In Discord, right-click your channel → Edit Channel
+3. Go to Integrations → Webhooks → New Webhook
+4. Name it (e.g., Resonance Alerts)
+5. Copy the Webhook URL
+6. Add the Webhook URL to the scanner via the `DISCORD_WEBHOOK` environment variable
+
+Run the scanner, and breakout alerts will flow directly into your Discord channel.
+
+---
+
+## 📦 Deployment
 
 ### Local (Python 3.10+)
 
@@ -76,42 +129,38 @@ pip install -r requirements.txt
 python breakout_scanner.py
 ```
 
-### Cloud (Railway / Render / etc.)
+### Cloud (Railway / Render / etc.) (More on this coming soon)
 
-* Add environment variables in your service dashboard
-* Deploy the script → logs will show scanning activity
-* Alerts will flow to your Discord channel
+- Add environment variables in your service dashboard
+- Deploy the script; logs will show scanning activity
+- Alerts will be sent to your Discord channel
 
 ---
 
-### Discord Setup
+## 🛠 Troubleshooting
 
-To receive alerts in your Discord server:
+- Ensure your Discord webhook URL is correct and active.
+- Check your internet connection and API rate limits.
+- Adjust `ABS_VOL_MIN_USD` if you see too many or too few alerts.
+- Use simple mode (`SIMPLE_MODE=1`) for faster, less detailed alerts.
+- Use pro mode (`SIMPLE_MODE=0`) for detailed analytics.
 
-Create a Webhook
-In Discord, right-click your channel → Edit Channel
-Go to Integrations → Webhooks → New Webhook
-→Give it a name (e.g. Resonance Alerts)
-→Copy the Webhook URL
-→Add the Webhook to the Scanner paste it directly into the code under DISCORD_WEBHOOK="https://discord.com/api/webhooks/..."
-
-Run the Scanner
-
-Once active, the bot will send breakout alerts directly into your channel.
+---
 
 ## 🔮 Roadmap
 
-* Auto-trading integration/dry run learning tool
-* Smarter auto coin list rotation (top gainers/losers)
-* Machine learning plugin (**WaveScore and HFT hunter)
-* Parachute Bot (scans current trades, sets limit orders, cancels and quickly market sells within 1 sec)
-* Soliton.ai Trading Arsenal - a free ML powered autotrader/HFT skimmer with multiple trading strategies and three easy set modes (MONK, HAWK and MADMAN) 
+- Auto-trading integration / dry run learning tool
+- Smarter auto coin list rotation (top gainers/losers)
+- Machine learning plugin (**WaveScore and HFT hunter**)
+- Parachute Bot (scans trades, sets limit orders, cancels, and quick market sells within 1 sec)
+- Soliton.ai Trading Arsenal: a free ML-powered autotrader/HFT skimmer with multiple strategies and modes (MONK, HAWK, MADMAN)
 
 ---
-## 📜 License  
-This project is licensed under the **Apache License 2.0** — free and open source.  
-You are free to use, modify, and distribute this code (including commercially),  
-provided you keep the copyright notice and license text.  
 
-⚠️ No warranties or guarantees are provided.  Use at your own risk. Not financial advice. Always paper trade after making changes to the scanner. 
+## 📜 License
 
+This project is licensed under the **Apache License 2.0** — free and open source.
+You are free to use, modify, and distribute this code (including commercially),
+provided you keep the copyright notice and license text.
+
+⚠️ No warranties or guarantees are provided. Use at your own risk. Not financial advice. Always paper trade after making changes.
