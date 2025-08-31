@@ -352,6 +352,10 @@ USDC_ONLY_COINS = []
 
 DISCORD_WEBHOOK = "ADD YOUR DISCORD WEBHOOK HERE"
 
+# === Telegram Configuration ===
+TELEGRAM_BOT_TOKEN = "ADD YOUR TELEGRAM BOT TOKEN HERE"  # Get from @BotFather
+TELEGRAM_CHAT_ID = "ADD YOUR TELEGRAM CHAT ID HERE"      # Your chat ID or channel ID
+
 # === Breakout Scanner Parameters ===
 CANDLE_INTERVAL = 60  # seconds
 
@@ -404,6 +408,25 @@ def send_discord_alert(pair, price, vol_info):
         "content": f"🚨 **BREAKOUT DETECTED** 🚨\n**Pair**: `{pair}`\n**Price**: `${price:.8f}`\n**Vol Spike**: {vol_info}\n**Time**: {datetime.now(timezone.utc).strftime('%H:%M:%S UTC')}"
     }
     requests.post(DISCORD_WEBHOOK, json=data)
+
+def send_telegram_alert(message: str):
+    """Send alert message to Telegram bot"""
+    try:
+        if not TELEGRAM_BOT_TOKEN or not TELEGRAM_CHAT_ID:
+            return  # Skip if not configured
+            
+        url = f"https://api.telegram.org/bot{TELEGRAM_BOT_TOKEN}/sendMessage"
+        data = {
+            "chat_id": TELEGRAM_CHAT_ID,
+            "text": message,
+            "parse_mode": "Markdown",
+            "disable_web_page_preview": True
+        }
+        response = requests.post(url, json=data, timeout=10)
+        if response.status_code != 200:
+            print(f"❌ Telegram API error: {response.status_code} - {response.text}", flush=True)
+    except Exception as e:
+        print(f"❌ Failed to send Telegram message: {e}", flush=True)
 
 def is_breakout_band(cset, breakout_threshold, volume_spike_ratio):
     """
@@ -609,7 +632,9 @@ while True:
                     band_details=band_details,
                     candle_interval_sec=CANDLE_INTERVAL
                 )
+                # Send to both Discord and Telegram
                 send_discord_rich(msg)
+                send_telegram_alert(msg)
             else:
                 print(f"{pair} | Δ: {percent_change:.2f}% | W: {band_width:.2f}%")
                 
